@@ -689,7 +689,16 @@ has_zeroout:
 		    !(map->m_flags & EXT4_MAP_UNWRITTEN) &&
 		    !IS_NOQUOTA(inode) &&
 		    ext4_should_order_data(inode)) {
+#ifdef CONFIG_EXT4_AFSYNC
+			loff_t start_byte =
+				(loff_t)map->m_lblk << inode->i_blkbits;
+			loff_t length = (loff_t)map->m_len << inode->i_blkbits;
+
+			ret = ext4_jbd2_file_inode(handle, inode,
+							start_byte, length);
+#else
 			ret = ext4_jbd2_file_inode(handle, inode);
+#endif
 			if (ret)
 				return ret;
 		}
@@ -3611,7 +3620,12 @@ static int __ext4_block_zero_page_range(handle_t *handle,
 		err = 0;
 		mark_buffer_dirty(bh);
 		if (ext4_test_inode_state(inode, EXT4_STATE_ORDERED_MODE))
+#ifdef CONFIG_EXT4_AFSYNC
+			err = ext4_jbd2_file_inode(handle, inode, from,
+							length);
+#else
 			err = ext4_jbd2_file_inode(handle, inode);
+#endif
 	}
 
 unlock:

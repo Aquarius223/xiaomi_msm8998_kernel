@@ -359,12 +359,23 @@ static inline int ext4_journal_force_commit(journal_t *journal)
 	return 0;
 }
 
+#ifdef CONFIG_EXT4_AFSYNC
+static inline int ext4_jbd2_file_inode(handle_t *handle, struct inode *inode,
+				loff_t start_byte, loff_t length)
+{
+	if (ext4_handle_valid(handle))
+		return jbd2_journal_file_inode(handle, EXT4_I(inode)->jinode,
+				start_byte, start_byte + length - 1);
+	return 0;
+}
+#else
 static inline int ext4_jbd2_file_inode(handle_t *handle, struct inode *inode)
 {
 	if (ext4_handle_valid(handle))
 		return jbd2_journal_file_inode(handle, EXT4_I(inode)->jinode);
 	return 0;
 }
+#endif
 
 static inline void ext4_update_inode_fsync_trans(handle_t *handle,
 						 struct inode *inode,
