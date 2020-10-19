@@ -120,5 +120,10 @@ out
 # kernel-compiler
 toolchain
 
+# kernel-compiler-shell
+phone_build.sh
+server_build.sh
+ci_build.py
+
 # fetched Android config fragments
 android/configs/android-*.cfg
