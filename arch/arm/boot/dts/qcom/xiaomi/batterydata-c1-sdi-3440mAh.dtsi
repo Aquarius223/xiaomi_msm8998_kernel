@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 XiaoMi, Inc.
+ * Copyright (C) 2019 XiaoMi, Inc.
  */
 qcom,sagit_sdi_3440mah {
 	qcom,max-voltage-uv = <4400000>;
@@ -7,7 +7,7 @@ qcom,sagit_sdi_3440mah {
 	qcom,fg-cc-cv-threshold-mv = <4390>;
 	qcom,batt-id-kohm = <30>;
 	qcom,battery-beta = <3435>;
-	qcom,battery-type = "sagit_sdi";
+	qcom,battery-type = "c1_sdi";
 	qcom,checksum = <0x623E>;
 	qcom,gui-version = "PMI8998GUI - 2.0.0.54";
 	qcom,fg-profile-data = [

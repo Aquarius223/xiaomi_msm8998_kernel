@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 XiaoMi, Inc.
+ * Copyright (C) 2019 XiaoMi, Inc.
  */
 qcom,sagit_atl_3350mah {
 	qcom,max-voltage-uv = <4400000>;
@@ -7,7 +7,7 @@ qcom,sagit_atl_3350mah {
 	qcom,fg-cc-cv-threshold-mv = <4390>;
 	qcom,batt-id-kohm = <68>;
 	qcom,battery-beta = <3435>;
-	qcom,battery-type = "sagit_atl";
+	qcom,battery-type = "c1_atl";
 	qcom,checksum = <0x23EB>;
 	qcom,gui-version = "PMI8998GUI - 2.0.0.54";
 	qcom,fg-profile-data = [
