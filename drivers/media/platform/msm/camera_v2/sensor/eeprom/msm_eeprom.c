@@ -1717,12 +1717,14 @@ static int msm_eeprom_platform_probe(struct platform_device *pdev)
 		pr_err("%s failed rc %d\n", __func__, rc);
 		goto board_free;
 	}
+
 	cci_client->cci_i2c_master = e_ctrl->cci_master;
 
 	rc = of_property_read_string(of_node, "qcom,eeprom-name",
 		&eb_info->eeprom_name);
 	CDBG("%s qcom,eeprom-name %s, rc %d\n", __func__,
 		eb_info->eeprom_name, rc);
+
 	if (rc < 0) {
 		pr_err("%s failed %d\n", __func__, __LINE__);
 		e_ctrl->userspace_probe = 1;
@@ -1744,16 +1746,19 @@ static int msm_eeprom_platform_probe(struct platform_device *pdev)
 			&e_ctrl->i2c_freq_mode);
 		CDBG("qcom,i2c_freq_mode %d, rc %d\n",
 			e_ctrl->i2c_freq_mode, rc);
+
 		if (rc < 0) {
 			pr_err("%s qcom,i2c-freq-mode read fail. Setting to 0 %d\n",
 				__func__, rc);
 			e_ctrl->i2c_freq_mode = 0;
 		}
+
 		if (e_ctrl->i2c_freq_mode >= I2C_MAX_MODES) {
 			pr_err("%s:%d invalid i2c_freq_mode = %d\n",
 				__func__, __LINE__, e_ctrl->i2c_freq_mode);
 			e_ctrl->i2c_freq_mode = 0;
 		}
+
 		eb_info->i2c_slaveaddr = temp;
 		CDBG("qcom,slave-addr = 0x%X\n", eb_info->i2c_slaveaddr);
 		eb_info->i2c_freq_mode = e_ctrl->i2c_freq_mode;
@@ -1770,6 +1775,7 @@ static int msm_eeprom_platform_probe(struct platform_device *pdev)
 			pr_err("failed rc %d\n", rc);
 			goto memdata_free;
 		}
+
 		rc = read_eeprom_memory(e_ctrl, &e_ctrl->cal_data);
 		if (rc < 0) {
 			pr_err("%s read_eeprom_memory failed\n", __func__);
@@ -1827,11 +1833,11 @@ static int msm_eeprom_platform_probe(struct platform_device *pdev)
 
 		for (j = 0; j < 3; j++) {
 			if (0 == j) {
-				strlcat(module_eeprom_name, pro_name, sizeof(pro_name));
+				strlcat(module_eeprom_name, pro_name, sizeof(module_eeprom_name));
 			} else if (1 == j) {
-				strlcat(module_eeprom_name, sensor_name, sizeof(sensor_name));
+				strlcat(module_eeprom_name, sensor_name, sizeof(module_eeprom_name));
 			} else {
-				strlcat(module_eeprom_name, module_name, sizeof(module_name));
+				strlcat(module_eeprom_name, module_name, sizeof(module_eeprom_name));
 			}
 		}
 		CDBG("%s: module_eeprom_name = %s\n", __func__, module_eeprom_name);
@@ -1894,7 +1900,7 @@ static int msm_eeprom_platform_probe(struct platform_device *pdev)
 	e_ctrl->is_supported = (e_ctrl->is_supported << 1) | 1;
 
 #ifdef CONFIG_MACH_XIAOMI_MSM8998
-	strlcpy(sensor_eeprom_name[eeprom_name_count].name, module_eeprom_name, sizeof(module_eeprom_name));
+	strlcpy(sensor_eeprom_name[eeprom_name_count].name, module_eeprom_name, sizeof(sensor_eeprom_name[eeprom_name_count].name));
 	pr_err("%s: sensor_eeprom_name[%d] = %s, probe success!\n", __func__, eeprom_name_count, sensor_eeprom_name[eeprom_name_count].name);
 	eeprom_name_count++;
 #endif
