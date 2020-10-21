@@ -80,6 +80,12 @@ void panic(const char *fmt, ...)
 	va_list args;
 	long i, i_next = 0;
 	int state = 0;
+	
+#ifdef CONFIG_EXT4_PANIC_SYNC
+	if (!in_atomic()) {
+		exec_fs_sync_work();
+	}
+#endif
 
 	trace_kernel_panic(0);
 

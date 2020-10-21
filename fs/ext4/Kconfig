@@ -146,3 +146,12 @@ config EXT4_AFSYNC
 	  Adjust the Fsync file system strategy according to the process
 
 	  If you are not sure, please hit n to close.
+	  
+config EXT4_PANIC_SYNC
+	bool "EXT4 Kernel Panic Sync FileSystem"
+	default y
+	depends on EXT4_AFSYNC
+	help
+	  If the kernel Panic is triggered, it starts to sync the file system
+
+	  If you are not sure, please hit n to close.
