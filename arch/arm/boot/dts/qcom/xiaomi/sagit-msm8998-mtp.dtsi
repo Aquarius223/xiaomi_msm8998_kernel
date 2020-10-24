@@ -849,6 +849,7 @@
 		qcom,batt-id-range-pct = <15>;
 		#include "batterydata-c1-atl-3350mAh.dtsi"
 		#include "batterydata-c1-sdi-3440mAh.dtsi"
+		#include "batterydata-stic-atl-4000mAh.dtsi"
 		#include "batterydata-itech-3020mAh.dtsi"
 	};
 };
