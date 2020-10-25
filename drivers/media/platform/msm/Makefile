@@ -8,3 +8,7 @@ obj-y += sde/
 obj-y += broadcast/
 obj-$(CONFIG_DVB_MPQ) += dvb/
 obj-$(CONFIG_MSM_AIS) += ais/
+
+# optimise Kernel size
+subdir-ccflags-y += $(call cc-option, -g0)
+subdir-ccflags-y += $(call cc-option, -Os)
