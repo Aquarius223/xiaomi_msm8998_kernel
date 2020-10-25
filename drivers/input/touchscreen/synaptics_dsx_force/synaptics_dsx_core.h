@@ -40,6 +40,7 @@
 #define SYNAPTICS_DSX_DRIVER_PRODUCT (SYNAPTICS_DS4 | SYNAPTICS_DS5)
 #define SYNAPTICS_DSX_DRIVER_VERSION 0x2065
 
+#include <linux/pm_qos.h>
 #include <linux/version.h>
 #ifdef CONFIG_FB
 #include <linux/notifier.h>
@@ -405,12 +406,6 @@ struct synaptics_rmi4_data {
 	bool chip_is_tddi;
 	bool open_test_b7;
 	bool short_test_extend;
-
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_TEST_REPORTING_FORCE
-	bool disable_data_dump;
-	bool dump_flags;
-#endif
-
 	bool enable_reversed_keys;
 
 	int (*reset_device)(struct synaptics_rmi4_data *rmi4_data,
@@ -425,10 +420,8 @@ struct synaptics_rmi4_data {
 	struct pinctrl_state *pinctrl_state_active;
 	struct pinctrl_state *pinctrl_state_suspend;
 	struct synaptics_dsx_factory_param *factory_param;
+	struct pm_qos_request pm_qos_req;
 
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_TEST_REPORTING_FORCE
-	struct completion dump_completion;
-#endif
 #ifdef CONFIG_TOUCH_DEBUG_FS
 	struct dentry *debugfs;
 #endif
